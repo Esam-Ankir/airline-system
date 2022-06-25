@@ -1,0 +1,25 @@
+{
+  "name": "airline-system",
+  "version": "1.0.0",
+  "description": "Control system for an Airline",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Esam-Ankir/airline-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Esam-Ankir/airline-system/issues"
+  },
+  "homepage": "https://github.com/Esam-Ankir/airline-system#readme",
+  "dependencies": {
+    "@faker-js/faker": "^7.3.0",
+    "nodemon": "^2.0.18",
+    "uuid": "^8.3.2"
+  }
+}
