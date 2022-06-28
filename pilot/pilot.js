@@ -1,9 +1,13 @@
 'use strict';
-const events = require('../events/events');
-events.on('new-flight', tookOff);
+require('dotenv').config();
+const PORT = process.env.PORT || 3030;
 
-// let n = 0;
-// let c = 0;
+const io = require('socket.io-client');
+let host = `http://localhost:${PORT}`;
+// const systemConnection = io.connect(`${host}`);
+let airLineConnection = io.connect(`${host}/airline`);
+
+airLineConnection.on('new-flight', tookOff); //(4)
 function tookOff(payload) {
     setTimeout(() => {
         let Flight = {
@@ -17,10 +21,11 @@ function tookOff(payload) {
             }
         }
         console.log(`Pilot: flight with ID ‘${payload.Details.flightID}’ took-off`);
-        events.emit('took-off', Flight)
+        airLineConnection.emit('took-off', Flight) //(5)
     }, 4000);
 }
-events.on('took-off', flightArrived);
+
+airLineConnection.on('took-off', flightArrived); //(8)
 function flightArrived(payload) {
     setTimeout(() => {
         let Flight = {
@@ -34,12 +39,7 @@ function flightArrived(payload) {
             }
         }
         console.log(`Pilot: flight with ID '${payload.Details.flightID}' has arrived`);
-        events.emit('arrived', Flight)
-
+        airLineConnection.emit('arrived', Flight) //(9)
     }, 3000)
 
 }
-
-
-
-
