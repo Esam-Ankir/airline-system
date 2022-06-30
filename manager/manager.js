@@ -1,13 +1,12 @@
 'use strict';
 require('dotenv').config();
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT;
 const { faker } = require('@faker-js/faker');
 
 const io = require('socket.io-client');
 let host = `http://localhost:${PORT}`;
 const systemConnection = io.connect(host);
 let airLineConnection = io.connect(`${host}/airline`);
-
 
 setInterval(() => {
     let Flight = {

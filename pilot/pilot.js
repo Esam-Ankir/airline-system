@@ -4,9 +4,16 @@ const PORT = process.env.PORT || 3030;
 
 const io = require('socket.io-client');
 let host = `http://localhost:${PORT}`;
-// const systemConnection = io.connect(`${host}`);
+const systemConnection = io.connect(host);
 let airLineConnection = io.connect(`${host}/airline`);
 
+///for msgQueue
+systemConnection.emit('get_all');
+systemConnection.on('flight', (flight) => { //m2
+    console.log(`Pilot:Sorry i didnt catch this flight ID ${flight.id}`);
+    systemConnection.emit('received', flight); //m3
+})
+///
 airLineConnection.on('new-flight', tookOff); //(4)
 function tookOff(payload) {
     setTimeout(() => {
@@ -41,5 +48,4 @@ function flightArrived(payload) {
         console.log(`Pilot: flight with ID '${payload.Details.flightID}' has arrived`);
         airLineConnection.emit('arrived', Flight) //(9)
     }, 3000)
-
 }
